@@ -6,3 +6,6 @@ crash.log
 
 # Ignore key_pairs folder
 key_pairs/
+
+# Ignore .terraform.lock.hcl file
+.terraform.lock.hcl
