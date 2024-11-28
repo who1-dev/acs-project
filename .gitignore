@@ -1,0 +1,8 @@
+# Ignore Terraform directories and files
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Ignore key_pairs folder
+key_pairs/
