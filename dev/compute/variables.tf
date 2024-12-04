@@ -52,6 +52,7 @@ variable "bastion_hosts" {
     sg_key        = string
     has_user_data = bool
     user_data     = string
+    custom_tags   = map(any)
   }))
   default = {
     bh1 = {
@@ -63,6 +64,7 @@ variable "bastion_hosts" {
       sg_key        = "bh1"
       has_user_data = true
       user_data     = "/user_data/install_httpd.sh"
+      custom_tags   = null
     }
   }
 }
@@ -77,6 +79,7 @@ variable "public_instances" {
     sg_key        = string
     has_user_data = bool
     user_data     = string
+    custom_tags   = map(any)
   }))
   default = {
     pub_vm3 = {
@@ -88,6 +91,9 @@ variable "public_instances" {
       sg_key        = "webserver"
       has_user_data = true
       user_data     = "/user_data/install_httpd.sh"
+      custom_tags = {
+        is_ansible_managed = true
+      }
     }
     pub_vm4 = {
       name          = "Webserver 4"
@@ -98,6 +104,9 @@ variable "public_instances" {
       sg_key        = "webserver"
       has_user_data = false
       user_data     = ""
+      custom_tags = {
+        is_ansible_managed = true
+      }
     }
   }
 }
@@ -113,6 +122,7 @@ variable "private_instances" {
     sg_key        = string
     has_user_data = bool
     user_data     = string
+    custom_tags   = map(any)
   }))
   default = {
     prv_vm5 = {
@@ -124,6 +134,7 @@ variable "private_instances" {
       sg_key        = "prv_vm5"
       has_user_data = false
       user_data     = ""
+      custom_tags   = null
     }
     prv_vm6 = {
       name          = "Webserver 6"
@@ -134,6 +145,7 @@ variable "private_instances" {
       sg_key        = "prv_vm6"
       has_user_data = false
       user_data     = ""
+      custom_tags   = null
     }
   }
 }

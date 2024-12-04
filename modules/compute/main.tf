@@ -27,7 +27,6 @@ locals {
   name_prefix   = "${var.namespace}-${var.env}"
   remote_states = { for k, v in data.terraform_remote_state.this : k => v.outputs }
   ec2s          = merge(var.bastion_hosts, var.public_instances, var.private_instances)
-  test          = { for k, v in var.security_group_ingress_ssh : k => v.description }
 }
 
 resource "aws_security_group" "this" {
@@ -70,6 +69,7 @@ resource "aws_instance" "this" {
   associate_public_ip_address = each.value.is_public
   user_data                   = each.value.user_data != "" ? file(each.value.user_data) : ""
   tags = merge(
+    each.value.custom_tags,
     local.default_tags, {
       Name = "${local.name_prefix}-${each.value.name}"
     }

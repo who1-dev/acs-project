@@ -1,5 +1,5 @@
 module "network" {
-  source = "../../modules/terraform-network-template"
+  source = "../../modules/network"
   #source             = "git@github.com:who1-dev/terraform-network-template.git"
   default_tags        = var.default_tags
   namespace           = var.namespace

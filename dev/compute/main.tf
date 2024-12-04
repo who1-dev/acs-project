@@ -1,5 +1,5 @@
 module "webserver" {
-  source = "../../modules/terraform-compute-template"
+  source = "../../modules/compute"
   #source                          = "git@github.com:who1-dev/terraform-webserver-template.git"
   default_tags                                = var.default_tags
   namespace                                   = var.namespace

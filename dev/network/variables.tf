@@ -154,9 +154,9 @@ variable "eips" {
     name = string
   }))
   default = {
-    # "eip1" = {
-    #   name = "EIP"
-    # }
+    "eip1" = {
+      name = "EIP"
+    }
   }
 }
 
@@ -169,11 +169,11 @@ variable "natgws" {
     rt_key      = string
   }))
   default = {
-    # pubsub1_natgw1 = {
-    #   name        = "NATGW"
-    #   eip_key     = "eip1"
-    #   pub_sub_key = "vpc1_pubsub1"
-    #   rt_key      = "vpc1_prvrt1"
-    # }
+    pubsub1_natgw1 = {
+      name        = "NATGW"
+      eip_key     = "eip1"
+      pub_sub_key = "vpc1_pubsub1"
+      rt_key      = "vpc1_prvrt1"
+    }
   }
 }

@@ -42,6 +42,7 @@ variable "bastion_hosts" {
     key_name      = string
     has_user_data = bool
     user_data     = string
+    custom_tags   = map(any)
   }))
   default = {
   }
@@ -57,6 +58,7 @@ variable "public_instances" {
     sg_key        = string
     has_user_data = bool
     user_data     = string
+    custom_tags   = map(any)
   }))
   default = {
   }
@@ -74,6 +76,7 @@ variable "private_instances" {
     sg_key        = string
     has_user_data = bool
     user_data     = string
+    custom_tags   = map(any)
   }))
   default = {
   }
