@@ -90,7 +90,7 @@ variable "public_instances" {
       key_name      = "pub_kp"
       sg_key        = "webserver"
       has_user_data = true
-      user_data     = "/user_data/install_httpd.sh"
+      user_data     = ""
       custom_tags = {
         is_ansible_managed = true
       }
@@ -312,10 +312,6 @@ variable "alb_target_group_attachments" {
     ec2_key    = string
   }))
   default = {
-    alg_tga1 = {
-      alb_tg_key = "alb_tg1"
-      ec2_key    = "pub_vm3"
-    }
   }
 }
 
