@@ -19,7 +19,7 @@ variable "app_role" {
 
 variable "env" {
   type    = string
-  default = "DEV"
+  default = "PROD"
 }
 
 variable "region" {

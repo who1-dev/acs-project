@@ -1,0 +1,22 @@
+module "webserver" {
+  source = "../../modules/compute"
+  #source                          = "git@github.com:who1-dev/terraform-webserver-template.git"
+  default_tags                                = var.default_tags
+  namespace                                   = var.namespace
+  env                                         = var.env
+  app_role                                    = var.app_role
+  remote_data_sources                         = var.remote_data_sources
+  bastion_hosts                               = var.bastion_hosts
+  public_instances                            = var.public_instances
+  private_instances                           = var.private_instances
+  key_pairs                                   = var.key_pairs
+  security_groups                             = var.security_groups
+  security_group_ingress_ssh                  = var.security_group_ingress_ssh
+  security_group_ingress_http_ec2             = var.security_group_ingress_http_ec2
+  security_group_ingress_http_to_ec2_using_sg = var.security_group_ingress_http_to_ec2_using_sg
+  alb_target_groups                           = var.alb_target_groups
+  alb_target_group_attachments                = var.alb_target_group_attachments
+  albs                                        = var.albs
+  launch_templates                            = var.launch_templates
+  auto_scaling_groups                         = var.auto_scaling_groups
+}
