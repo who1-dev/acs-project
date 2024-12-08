@@ -19,7 +19,7 @@ variable "app_role" {
 
 variable "env" {
   type    = string
-  default = "DEV"
+  default = "PROD"
 }
 
 variable "region" {
@@ -106,7 +106,7 @@ variable "public_subnets" {
       rt_key            = "vpc1_pubrt1"
       cidr_block        = "10.1.4.0/24"
       availability_zone = "us-east-1d"
-    }                    
+    }
   }
 }
 
