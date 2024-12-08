@@ -1,8 +1,11 @@
 #!/bin/bash
+# Install Apache Web Server
 yum -y update
 yum -y install httpd
-myip=`curl http://169.254.169.254/latest/meta-data/local-ipv4`
-echo "<h1>Welcome to ACS730 Final Project - VM1 My private IP is $myip</h1><br>Created by: John Caranay"  >  /var/www/html/index.html
+# Download files
+wget https://github.com/AlvaradoA/acs-project-webpage/archive/refs/heads/main.zip
+unzip -p main.zip acs-project-webpage-main/index.html > /var/www/html/index.html
+# Turn on web server
 sudo systemctl start httpd
 sudo systemctl enable httpd
 sudo systemctl status httpd
