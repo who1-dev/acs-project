@@ -247,7 +247,6 @@ variable "security_group_ingress_http_ec2" {
     source      = string
   }))
   default = {
-
     alb_sg = {
       description = "Allow HTTP to all for Load Balancer"
       source      = "all"
@@ -256,14 +255,6 @@ variable "security_group_ingress_http_ec2" {
       description = "Allow HTTP to all webservers"
       source      = "all"
     }
-    # prv_vm5 = {
-    #   description = "Allow HTTP to all "
-    #   source      = "all"
-    # },
-    # prv_vm6 = {
-    #   description = "Allow HTTP to all "
-    #   source      = "all"
-    # }
   }
 }
 
@@ -274,14 +265,14 @@ variable "security_group_ingress_http_to_ec2_using_sg" {
     source      = string
   }))
   default = {
-    # prv_vm5 = {
-    #   description = "Allow HTTP from Application Load Balancer SG "
-    #   source      = "alb_sg"
-    # },
-    # prv_vm6 = {
-    #   description = "Allow HTTP from Application Load Balancer SG "
-    #   source      = "alb_sg"
-    # }
+    prv_vm5 = {
+      description = "Allow HTTP from BH SG "
+      source      = "bh1"
+    },
+    prv_vm6 = {
+      description = "Allow HTTP from BH SG "
+      source      = "bh1"
+    }
   }
 }
 
