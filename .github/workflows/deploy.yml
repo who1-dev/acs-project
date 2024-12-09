@@ -14,7 +14,7 @@ on:
     - dev/**
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
@@ -128,4 +128,12 @@ jobs:
         run: terraform apply -input=false tf.plan
         working-directory: ${{ matrix.dir }} # Use your environment folder
         shell: bash
-        
+
+      - name: Notify Ansible Workflow
+        if: success()
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: minhtrung071190/ansible
+          event-type: terraform_complete
+          client-payload: '{"environment": "prod"}'
