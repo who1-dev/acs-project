@@ -89,7 +89,7 @@ variable "public_instances" {
       subnet_key    = "vpc1_pubsub3"
       key_name      = "pub_kp"
       sg_key        = "webserver"
-      has_user_data = true
+      has_user_data = false
       user_data     = ""
       custom_tags = {
         is_ansible_managed = true
@@ -132,8 +132,8 @@ variable "private_instances" {
       subnet_key    = "vpc1_prvsub1"
       key_name      = "prv_kp"
       sg_key        = "prv_vm5"
-      has_user_data = false
-      user_data     = ""
+      has_user_data = true
+      user_data     = "/user_data/install_httpd.sh"
       custom_tags   = null
     }
     prv_vm6 = {
@@ -143,8 +143,8 @@ variable "private_instances" {
       subnet_key    = "vpc1_prvsub2"
       key_name      = "prv_kp"
       sg_key        = "prv_vm6"
-      has_user_data = false
-      user_data     = ""
+      has_user_data = true
+      user_data     = "/user_data/install_httpd.sh"
       custom_tags   = null
     }
   }
