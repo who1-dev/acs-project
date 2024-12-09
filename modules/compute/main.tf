@@ -196,6 +196,15 @@ resource "aws_autoscaling_group" "this" {
   health_check_grace_period = 300
   vpc_zone_identifier       = [for subnet in each.value.vpc_zone_identifier_subnets : local.remote_states[each.value.remote_key].details.subnets[subnet]]
   target_group_arns         = [aws_lb_target_group.this[each.value.target_group_arns].arn]
+  
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+    }
+    triggers = ["tag"]
+  }
+  
   tag {
     key                 = "Name"
     value               = "Webserver-ASG"
