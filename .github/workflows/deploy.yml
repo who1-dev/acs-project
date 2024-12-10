@@ -134,6 +134,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          repository: minhtrung071190/ansible
+          repository: who1-dev/acs-project-ansible
           event-type: terraform_complete
           client-payload: '{"environment": "prod"}'
