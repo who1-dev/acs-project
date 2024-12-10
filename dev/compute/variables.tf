@@ -266,7 +266,7 @@ variable "security_group_ingress_http_to_ec2_using_sg" {
   }))
   default = {
     prv_vm5 = {
-      description = "Allow HTTP from BH SG "
+      description = "Allow HTTP from BH SG   "
       source      = "bh1"
     },
     prv_vm6 = {
