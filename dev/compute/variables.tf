@@ -370,7 +370,7 @@ variable "auto_scaling_groups" {
       max_size                    = 2
       min_size                    = 2
       launch_template_key         = "webserver_lt"
-      vpc_zone_identifier_subnets = ["vpc1_pubsub1", "vpc1_pubsub2"]
+      vpc_zone_identifier_subnets = ["vpc1_pubsub1", "vpc1_pubsub2", "vpc1_pubsub3"]
       remote_key                  = "network"
       target_group_arns           = "alb_tg1"
     }

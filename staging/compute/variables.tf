@@ -14,7 +14,7 @@ variable "namespace" {
 
 variable "env" {
   type    = string
-  default = "DEV"
+  default = "STAGING"
 }
 
 variable "app_role" {
@@ -36,7 +36,7 @@ variable "remote_data_sources" {
   default = {
     network = {
       bucket = "backend-jcaranay-tf"
-      key    = "dev/networking/terraform.tfstate"
+      key    = "staging/networking/terraform.tfstate"
       region = "us-east-1"
     }
   }
@@ -89,7 +89,7 @@ variable "public_instances" {
       subnet_key    = "vpc1_pubsub3"
       key_name      = "pub_kp"
       sg_key        = "webserver"
-      has_user_data = true
+      has_user_data = false
       user_data     = ""
       custom_tags = {
         is_ansible_managed = true
@@ -132,8 +132,8 @@ variable "private_instances" {
       subnet_key    = "vpc1_prvsub1"
       key_name      = "prv_kp"
       sg_key        = "prv_vm5"
-      has_user_data = false
-      user_data     = ""
+      has_user_data = true
+      user_data     = "/user_data/install_httpd.sh"
       custom_tags   = null
     }
     prv_vm6 = {
@@ -143,8 +143,8 @@ variable "private_instances" {
       subnet_key    = "vpc1_prvsub2"
       key_name      = "prv_kp"
       sg_key        = "prv_vm6"
-      has_user_data = false
-      user_data     = ""
+      has_user_data = true
+      user_data     = "/user_data/install_httpd.sh"
       custom_tags   = null
     }
   }
@@ -247,7 +247,6 @@ variable "security_group_ingress_http_ec2" {
     source      = string
   }))
   default = {
-
     alb_sg = {
       description = "Allow HTTP to all for Load Balancer"
       source      = "all"
@@ -256,14 +255,6 @@ variable "security_group_ingress_http_ec2" {
       description = "Allow HTTP to all webservers"
       source      = "all"
     }
-    # prv_vm5 = {
-    #   description = "Allow HTTP to all "
-    #   source      = "all"
-    # },
-    # prv_vm6 = {
-    #   description = "Allow HTTP to all "
-    #   source      = "all"
-    # }
   }
 }
 
@@ -274,14 +265,14 @@ variable "security_group_ingress_http_to_ec2_using_sg" {
     source      = string
   }))
   default = {
-    # prv_vm5 = {
-    #   description = "Allow HTTP from Application Load Balancer SG "
-    #   source      = "alb_sg"
-    # },
-    # prv_vm6 = {
-    #   description = "Allow HTTP from Application Load Balancer SG "
-    #   source      = "alb_sg"
-    # }
+    prv_vm5 = {
+      description = "Allow HTTP from BH SG "
+      source      = "bh1"
+    },
+    prv_vm6 = {
+      description = "Allow HTTP from BH SG "
+      source      = "bh1"
+    }
   }
 }
 
@@ -379,7 +370,7 @@ variable "auto_scaling_groups" {
       max_size                    = 2
       min_size                    = 2
       launch_template_key         = "webserver_lt"
-      vpc_zone_identifier_subnets = ["vpc1_pubsub1", "vpc1_pubsub2"]
+      vpc_zone_identifier_subnets = ["vpc1_pubsub1", "vpc1_pubsub2", "vpc1_pubsub3"]
       remote_key                  = "network"
       target_group_arns           = "alb_tg1"
     }
