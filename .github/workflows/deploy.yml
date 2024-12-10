@@ -1,32 +1,36 @@
-name: "Terraform - Staging"
+name: "Terraform - dev"
 # https://gaunacode.com/deploying-terraform-at-scale-with-github-actions
 on:
   push:
     branches:
     - prod
     paths:
-    - staging/**
+    - dev/**
 
   pull_request:
     branches:
     - prod
     paths: 
-    - staging/**
+    - dev/**
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
-    environment: staging
+    environment: prod
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN:  ${{ secrets.AWS_SESSION_TOKEN }}
+    
+    strategy:
+      matrix:
+        dir: ["./dev/network", "./dev/compute"]
 
     steps:
       - name: Checkout
@@ -42,25 +46,33 @@ jobs:
         id: fmt
         run: terraform fmt 
         continue-on-error: true
-        working-directory: ./staging
+        working-directory: ${{ matrix.dir }}
 
 
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ./staging
+        working-directory: ${{ matrix.dir }}
 
            
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: ./staging
+        working-directory: ${{ matrix.dir }}
 
-    
+      - name: create ssh key
+        working-directory: ./dev/compute
+        run: |
+         echo "${{ secrets.SSH_PUBCLIC_PK }}" > ${{ github.workspace }}/dev/compute/key_pairs/public_kp.pub
+         echo "${{ secrets.SSH_PUBCLIC_PK }}" > ${{ github.workspace }}/dev/compute/key_pairs/private_kp.pub         
+         sudo chmod 600 ${{ github.workspace }}/dev/compute/key_pairs/public_kp.pub
+         sudo chmod 600 ${{ github.workspace }}/dev/compute/key_pairs/private_kp.pub
+         
+
       - name: Terraform Plan
         id: plan
         run: terraform plan -input=false -no-color -out tf.plan
-        working-directory: ./staging # Use your environment folder
+        working-directory: ${{ matrix.dir }} # Use your environment folder
         continue-on-error: true
 
       - name: Get result
@@ -69,7 +81,7 @@ jobs:
       - name: Terraform Show
         id: show
         run: terraform show -no-color tf.plan 2>&1 > /tmp/plan.txt
-        working-directory: ./staging # Use your environment folder
+        working-directory: ${{ matrix.dir }} # Use your environment folder
           
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
@@ -114,6 +126,14 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/prod' && github.event_name == 'push'
         run: terraform apply -input=false tf.plan
-        working-directory: ./staging # Use your environment folder
+        working-directory: ${{ matrix.dir }} # Use your environment folder
         shell: bash
-        
+
+      - name: Notify Ansible Workflow
+        if: success()
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: minhtrung071190/ansible
+          event-type: terraform_complete
+          client-payload: '{"environment": "prod"}'

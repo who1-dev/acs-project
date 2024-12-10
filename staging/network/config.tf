@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket = "backend-jcaranay-tf"
-    key    = "dev/networking/terraform.tfstate"
+    key    = "staging/networking/terraform.tfstate"
     region = "us-east-1"
   }
   required_version = ">= 0.13" # Ensure you're using Terraform 0.13 or newer
