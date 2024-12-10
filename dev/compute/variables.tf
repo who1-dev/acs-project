@@ -56,7 +56,7 @@ variable "bastion_hosts" {
   }))
   default = {
     bh1 = {
-      name          = "Bastion VM"
+      name          = "Bastion VMachine"
       is_public     = true
       instance_type = "t2.micro"
       subnet_key    = "vpc1_pubsub2"
