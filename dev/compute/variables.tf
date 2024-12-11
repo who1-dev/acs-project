@@ -305,7 +305,7 @@ variable "alb_target_group_attachments" {
   default = {
     tga1 = {
       alb_tg_key = "alb_tg1"
-      ec2_key = "pub_vm3"
+      ec2_key    = "pub_vm3"
     }
   }
 }
