@@ -31,7 +31,7 @@ variable "remote_data_sources" {
   default = {
     network = {
       bucket = <your-s3-bucket-here>
-      key    = "dev/networking/terraform.tfstate"
+      key    = "<env>/networking/terraform.tfstate"
       region = "us-east-1"
     }
   }
