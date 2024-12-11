@@ -56,7 +56,7 @@ variable "bastion_hosts" {
   }))
   default = {
     bh1 = {
-      name          = "Bastion VM"
+      name          = "Bastion VM "
       is_public     = true
       instance_type = "t2.micro"
       subnet_key    = "vpc1_pubsub2"
@@ -266,7 +266,7 @@ variable "security_group_ingress_http_to_ec2_using_sg" {
   }))
   default = {
     prv_vm5 = {
-      description = "Allow HTTP from BH SG "
+      description = "Allow HTTP from BH SG   "
       source      = "bh1"
     },
     prv_vm6 = {
@@ -303,6 +303,10 @@ variable "alb_target_group_attachments" {
     ec2_key    = string
   }))
   default = {
+    tga1 = {
+      alb_tg_key = "alb_tg1"
+      ec2_key    = "pub_vm3"
+    }
   }
 }
 
