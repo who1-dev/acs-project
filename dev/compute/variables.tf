@@ -303,6 +303,10 @@ variable "alb_target_group_attachments" {
     ec2_key    = string
   }))
   default = {
+    tga1 = {
+      alb_tg_key = "alb_tg1"
+      ec2_key    = "pub_vm3"
+    }
   }
 }
 
